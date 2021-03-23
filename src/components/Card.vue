@@ -20,8 +20,8 @@ const groupBy = function (arr, key) {
   return arr.reduce((rv, x) => {
     (rv[x[key]] = rv[x[key]] || []).push(x);
     return rv;
-  }, {});
-};
+  }, {})
+}
 
 export default {
   props: {
@@ -31,7 +31,7 @@ export default {
       count: 0,
       items: [],
       url: "http://5c92dbfae7b1a00014078e61.mockapi.io/owners",
-    };
+    }
   },
   computed: {
     getItems() {
@@ -39,19 +39,19 @@ export default {
         return a.name > b.name ? 1 : -1;
       });
       return groupBy(items, "gender");
-    },
+    }
   },
   methods: {
     fetchRecord() {
       fetch(this.url)
         .then((response) => response.json())
         .then((data) => (this.items = data));
-    },
+    }
   },
   mounted() {
-    this.fetchRecord();
-  },
-};
+    this.fetchRecord()
+  }
+}
 </script>
 
 <style scoped>
