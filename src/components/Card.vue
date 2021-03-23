@@ -1,17 +1,20 @@
 <template>
   <el-card class="box-card">
-    <template #header>
+    <template #header> 
       <div class="card-header">
         <span>A simple demo </span>
       </div>
     </template>
-
-    <div v-for="(items, key) in getItems" :key="key" class="text item">
-      {{ key }}
-      <ul>
-        <li v-for="item in items" :key="item.name">{{ item.name }}</li>
-      </ul>
+    <div id="result">
+      <div v-for="(items, key) in getItems" :key="key" class="text item">
+        {{ key }}
+        <ul>
+          <li v-for="item in items" :key="item.name">{{ item.name }}</li>
+        </ul>
+      </div>
     </div>
+
+
   </el-card>
 </template>
 
@@ -22,13 +25,13 @@ const groupBy = function (arr, key) {
     return rv;
   }, {})
 }
+import { ElLoading } from 'element-plus'
 
 export default {
   props: {
   },
   data() {
     return {
-      count: 0,
       items: [],
       url: "http://5c92dbfae7b1a00014078e61.mockapi.io/owners",
     }
@@ -43,9 +46,15 @@ export default {
   },
   methods: {
     fetchRecord() {
+      const loading = ElLoading.service({
+        target: '#result'
+      })
       fetch(this.url)
         .then((response) => response.json())
-        .then((data) => (this.items = data));
+        .then((data) => {
+          loading.close()
+          this.items = data
+        });
     }
   },
   mounted() {
